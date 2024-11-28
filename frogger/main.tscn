@@ -1,3 +1,16 @@
-[gd_scene format=3 uid="uid://brkji1xsxj488"]
+[gd_scene load_steps=5 format=3 uid="uid://brkji1xsxj488"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_lafjp"]
+[ext_resource type="PackedScene" uid="uid://coydm3gpp3oqm" path="res://cars.tscn" id="2_1txvb"]
+[ext_resource type="PackedScene" uid="uid://b2wt8wkbohjnm" path="res://background.tscn" id="2_oaoac"]
+[ext_resource type="PackedScene" uid="uid://co5gtna1qh7ng" path="res://player.tscn" id="3_tx6ve"]
 
 [node name="Main" type="Node"]
+script = ExtResource("1_lafjp")
+car_scene = ExtResource("2_1txvb")
+
+[node name="Background" parent="." instance=ExtResource("2_oaoac")]
+
+[node name="Player" parent="." instance=ExtResource("3_tx6ve")]
+
+[node name="car_timer" type="Timer" parent="."]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0cyjyfwirx6t"]
+
+[ext_resource type="Script" path="res://truck.gd" id="1_58ojs"]
+[ext_resource type="Texture2D" uid="uid://lv1i2jcebprm" path="res://assets/truck.png" id="1_e4own"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iehx1"]
+size = Vector2(111, 44)
+
+[node name="truck" type="Area2D"]
+script = ExtResource("1_58ojs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_e4own")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, 0)
+shape = SubResource("RectangleShape2D_iehx1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -8,8 +8,7 @@ const JUMP_VELOCITY = -400.0
 # 14 x 13 grid
 
 func _ready():
-	self.position = Vector2i(500,200)	
-	print("60 x 60")
+	self.position = Vector2i(500,200)	# for testing scene
 
 func _physics_process(delta):
 	

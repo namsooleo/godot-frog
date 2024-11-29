@@ -48,7 +48,6 @@ script = ExtResource("1_72mib")
 [node name="car_types" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xksat")
 frame = 3
-frame_progress = 0.616713
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_nnse5")

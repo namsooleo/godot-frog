@@ -2,12 +2,17 @@ extends Node
 
 @export var car_scene : PackedScene
 @export var truck_scene : PackedScene
+@export var short_log_scene : PackedScene
+@export var medium_log_scene : PackedScene
+@export var long_log_scene : PackedScene
 const CELL_SIZE : int = 60
 const obstacle_delay : int = 50
 var MAP_HEIGHT_GRID # 14 x 13 grid
 var MAP_WIDTH_GRID # 14 x 13 grid
 var SCREEN_SIZE
 var vehicle_lanes : Array = [[], [], [], [], []]
+var water_lanes : Array = []
+var floating : bool
 var game_over : bool
 var score : int
 
@@ -18,6 +23,7 @@ func _ready():
 	MAP_WIDTH_GRID = $Background.texture.get_size().x / CELL_SIZE
 	$Player.position = Vector2i(((MAP_WIDTH_GRID/2)*CELL_SIZE),(MAP_HEIGHT_GRID*CELL_SIZE)-30)	
 	print(vehicle_lanes.size())
+	log_spawn()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -28,6 +34,12 @@ func _physics_process(delta):
 				vehicle.position.x -= 2
 			else:
 				vehicle.position.x += 4
+		
+	for platform in water_lanes:
+		platform.position.x -= 1
+		
+	if floating:
+		$Player.position.x -= 1
 	
 func car_spawn(car_type, lane):
 	var car = car_scene.instantiate()
@@ -46,14 +58,32 @@ func truck_spawn():
 	var truck = truck_scene.instantiate()
 	truck.position.x = SCREEN_SIZE.x + obstacle_delay
 	truck.position.y = (CELL_SIZE * (MAP_HEIGHT_GRID - 5)) - 30
-	truck.hit.connect(frog_hit )
+	truck.hit.connect(frog_hit)
 	add_child(truck)
 	vehicle_lanes[4].append(truck)
-	
+
+func log_spawn():
+	var short_log = short_log_scene.instantiate()
+	short_log.position.x = SCREEN_SIZE.x + obstacle_delay
+	short_log.position.y = (CELL_SIZE * (MAP_HEIGHT_GRID - 7)) - 30
+	short_log.on_log.connect(on_platform)
+	short_log.off_log.connect(off_platform)
+	add_child(short_log)
+	water_lanes.append(short_log)
+
+func on_platform():
+	floating = true
+
+func off_platform():
+	floating = false
+
 func frog_hit():
 	print('dead')
 	game_over = true
-
+	
+func _on_background_drown():
+	print("drown")
+	
 func _on_lane_1_timer_timeout():
 	car_spawn(0, 1)
 
@@ -68,3 +98,5 @@ func _on_lane_4_timer_timeout():
 
 func _on_lane_5_timer_timeout():
 	truck_spawn()
+
+

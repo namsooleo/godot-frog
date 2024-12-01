@@ -1,15 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://brkji1xsxj488"]
+[gd_scene load_steps=7 format=3 uid="uid://brkji1xsxj488"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_lafjp"]
 [ext_resource type="PackedScene" uid="uid://coydm3gpp3oqm" path="res://cars.tscn" id="2_1txvb"]
 [ext_resource type="PackedScene" uid="uid://b2wt8wkbohjnm" path="res://background.tscn" id="2_oaoac"]
 [ext_resource type="PackedScene" uid="uid://b0cyjyfwirx6t" path="res://truck.tscn" id="3_sxv3d"]
 [ext_resource type="PackedScene" uid="uid://co5gtna1qh7ng" path="res://player.tscn" id="3_tx6ve"]
+[ext_resource type="PackedScene" uid="uid://bg8vmfrs4xbpv" path="res://short_log.tscn" id="4_7llso"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_lafjp")
 car_scene = ExtResource("2_1txvb")
 truck_scene = ExtResource("3_sxv3d")
+short_log_scene = ExtResource("4_7llso")
 
 [node name="Background" parent="." instance=ExtResource("2_oaoac")]
 
@@ -35,6 +37,7 @@ autostart = true
 wait_time = 1.5
 autostart = true
 
+[connection signal="drown" from="Background" to="." method="_on_background_drown"]
 [connection signal="timeout" from="lane1_timer" to="." method="_on_lane_1_timer_timeout"]
 [connection signal="timeout" from="lane2_timer" to="." method="_on_lane_2_timer_timeout"]
 [connection signal="timeout" from="lane3_timer" to="." method="_on_lane_3_timer_timeout"]

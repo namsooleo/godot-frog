@@ -1,10 +1,10 @@
 extends Area2D
 
-signal on_log
-signal off_log
+signal on_turtle
+signal off_turtle
 
 func _on_body_entered(body):
-	on_log.emit()
+	on_turtle.emit()
 
 func _on_body_exited(body):
-	off_log.emit()
+	off_turtle.emit()

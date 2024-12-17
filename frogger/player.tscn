@@ -1,24 +1,60 @@
-[gd_scene load_steps=7 format=3 uid="uid://co5gtna1qh7ng"]
+[gd_scene load_steps=11 format=3 uid="uid://co5gtna1qh7ng"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_e76jc"]
+[ext_resource type="Texture2D" uid="uid://bfn4wmpxbmwn3" path="res://assets/death.png" id="2_rkrcf"]
 [ext_resource type="Texture2D" uid="uid://dudlxefy1rnmg" path="res://assets/frog.png" id="2_w7m7p"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_s3ri0"]
-atlas = ExtResource("2_w7m7p")
+[sub_resource type="AtlasTexture" id="AtlasTexture_csonp"]
+atlas = ExtResource("2_rkrcf")
+region = Rect2(0, 0, 60, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7gf2"]
+atlas = ExtResource("2_rkrcf")
 region = Rect2(60, 0, 60, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gl713"]
+atlas = ExtResource("2_rkrcf")
+region = Rect2(120, 0, 60, 60)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aw83a"]
 atlas = ExtResource("2_w7m7p")
 region = Rect2(0, 0, 60, 60)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3ri0"]
+atlas = ExtResource("2_w7m7p")
+region = Rect2(60, 0, 60, 60)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_0gmaf"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_s3ri0")
+"texture": SubResource("AtlasTexture_csonp")
 }, {
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_h7gf2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gl713")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7gf2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_csonp")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_aw83a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s3ri0")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_aw83a")
@@ -29,9 +65,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wyyq7"]
-size = Vector2(47, 35)
+size = Vector2(40, 35)
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 1
 script = ExtResource("1_e76jc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

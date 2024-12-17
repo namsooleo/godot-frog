@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2wt8wkbohjnm"]
+[gd_scene load_steps=6 format=3 uid="uid://b2wt8wkbohjnm"]
 
 [ext_resource type="Texture2D" uid="uid://ci1ynss1cdec0" path="res://assets/background.png" id="1_5pxds"]
 [ext_resource type="Script" path="res://background.gd" id="2_kqgxr"]
+[ext_resource type="Texture2D" uid="uid://djjnl3mdyqxp6" path="res://assets/goal.png" id="3_4bhcf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x80yx"]
-size = Vector2(830, 286)
+size = Vector2(830, 283)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_74vqq"]
+size = Vector2(69.125, 58.375)
 
 [node name="Background" type="Sprite2D"]
 z_index = -99
@@ -12,10 +16,67 @@ texture = ExtResource("1_5pxds")
 offset = Vector2(420, 390)
 script = ExtResource("2_kqgxr")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Background" type="Area2D" parent="."]
+z_index = -99
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(420, 211)
+[node name="Water" type="CollisionShape2D" parent="Background"]
+position = Vector2(420, 209.5)
 shape = SubResource("RectangleShape2D_x80yx")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[node name="Goal1" type="Sprite2D" parent="."]
+position = Vector2(57, 37)
+texture = ExtResource("3_4bhcf")
+
+[node name="Goal_Area1" type="Area2D" parent="Goal1"]
+
+[node name="Goal_Collision1" type="CollisionShape2D" parent="Goal1/Goal_Area1"]
+position = Vector2(-0.125, -0.375)
+shape = SubResource("RectangleShape2D_74vqq")
+
+[node name="Goal2" type="Sprite2D" parent="."]
+position = Vector2(238, 37)
+texture = ExtResource("3_4bhcf")
+
+[node name="Goal_Area2" type="Area2D" parent="Goal2"]
+
+[node name="Goal_Collision2" type="CollisionShape2D" parent="Goal2/Goal_Area2"]
+position = Vector2(-0.125, -0.375)
+shape = SubResource("RectangleShape2D_74vqq")
+
+[node name="Goal3" type="Sprite2D" parent="."]
+position = Vector2(416, 37)
+texture = ExtResource("3_4bhcf")
+
+[node name="Goal_Area3" type="Area2D" parent="Goal3"]
+
+[node name="Goal_Collision3" type="CollisionShape2D" parent="Goal3/Goal_Area3"]
+position = Vector2(-0.125, -0.375)
+shape = SubResource("RectangleShape2D_74vqq")
+
+[node name="Goal4" type="Sprite2D" parent="."]
+position = Vector2(593, 37)
+texture = ExtResource("3_4bhcf")
+
+[node name="Goal_Area4" type="Area2D" parent="Goal4"]
+
+[node name="Goal_Collision4" type="CollisionShape2D" parent="Goal4/Goal_Area4"]
+position = Vector2(-0.125, -0.375)
+shape = SubResource("RectangleShape2D_74vqq")
+
+[node name="Goal5" type="Sprite2D" parent="."]
+position = Vector2(772, 37)
+texture = ExtResource("3_4bhcf")
+
+[node name="Goal_Area5" type="Area2D" parent="Goal5"]
+
+[node name="Goal_Collision5" type="CollisionShape2D" parent="Goal5/Goal_Area5"]
+position = Vector2(-0.125, -0.375)
+shape = SubResource("RectangleShape2D_74vqq")
+
+[connection signal="body_entered" from="Background" to="." method="_on_background_body_entered"]
+[connection signal="body_exited" from="Background" to="." method="_on_background_body_exited"]
+[connection signal="body_entered" from="Goal1/Goal_Area1" to="." method="_on_goal_area_1_body_entered"]
+[connection signal="body_entered" from="Goal2/Goal_Area2" to="." method="_on_goal_area_2_body_entered"]
+[connection signal="body_entered" from="Goal3/Goal_Area3" to="." method="_on_goal_area_3_body_entered"]
+[connection signal="body_entered" from="Goal4/Goal_Area4" to="." method="_on_goal_area_4_body_entered"]
+[connection signal="body_entered" from="Goal5/Goal_Area5" to="." method="_on_goal_area_5_body_entered"]

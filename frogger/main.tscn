@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://brkji1xsxj488"]
+[gd_scene load_steps=11 format=3 uid="uid://brkji1xsxj488"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_lafjp"]
 [ext_resource type="PackedScene" uid="uid://coydm3gpp3oqm" path="res://cars.tscn" id="2_1txvb"]
@@ -6,40 +6,78 @@
 [ext_resource type="PackedScene" uid="uid://b0cyjyfwirx6t" path="res://truck.tscn" id="3_sxv3d"]
 [ext_resource type="PackedScene" uid="uid://co5gtna1qh7ng" path="res://player.tscn" id="3_tx6ve"]
 [ext_resource type="PackedScene" uid="uid://bg8vmfrs4xbpv" path="res://short_log.tscn" id="4_7llso"]
+[ext_resource type="PackedScene" uid="uid://cb3cbpbi4ia0r" path="res://medium_log.tscn" id="5_ybldv"]
+[ext_resource type="PackedScene" uid="uid://dsubp7nqwunru" path="res://long_log.tscn" id="6_twjef"]
+[ext_resource type="PackedScene" uid="uid://ccu0okb26jm83" path="res://turtle.tscn" id="7_t7yqg"]
+[ext_resource type="PackedScene" uid="uid://74cwxqinkvmy" path="res://ui.tscn" id="10_jvlha"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_lafjp")
 car_scene = ExtResource("2_1txvb")
 truck_scene = ExtResource("3_sxv3d")
 short_log_scene = ExtResource("4_7llso")
+medium_log_scene = ExtResource("5_ybldv")
+long_log_scene = ExtResource("6_twjef")
+turtle_scene = ExtResource("7_t7yqg")
 
-[node name="Background" parent="." instance=ExtResource("2_oaoac")]
+[node name="ui" parent="." instance=ExtResource("10_jvlha")]
+size_flags_vertical = 4
 
 [node name="Player" parent="." instance=ExtResource("3_tx6ve")]
 
+[node name="Background" parent="." instance=ExtResource("2_oaoac")]
+
 [node name="lane1_timer" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 3.0
 autostart = true
 
 [node name="lane2_timer" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 2.8
 autostart = true
 
 [node name="lane3_timer" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 2.5
 autostart = true
 
 [node name="lane4_timer" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 1.8
 autostart = true
 
 [node name="lane5_timer" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 3.8
 autostart = true
 
-[connection signal="drown" from="Background" to="." method="_on_background_drown"]
+[node name="waterway1_timer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[node name="waterway2_timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="waterway3_timer" type="Timer" parent="."]
+wait_time = 4.5
+autostart = true
+
+[node name="waterway4_timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="waterway5_timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="start_game" from="ui" to="." method="_on_ui_start_game"]
+[connection signal="enter_water" from="Background" to="." method="_on_background_enter_water"]
+[connection signal="exit_water" from="Background" to="." method="_on_background_exit_water"]
+[connection signal="goal_hit" from="Background" to="." method="_on_background_goal_hit"]
 [connection signal="timeout" from="lane1_timer" to="." method="_on_lane_1_timer_timeout"]
 [connection signal="timeout" from="lane2_timer" to="." method="_on_lane_2_timer_timeout"]
 [connection signal="timeout" from="lane3_timer" to="." method="_on_lane_3_timer_timeout"]
 [connection signal="timeout" from="lane4_timer" to="." method="_on_lane_4_timer_timeout"]
 [connection signal="timeout" from="lane5_timer" to="." method="_on_lane_5_timer_timeout"]
+[connection signal="timeout" from="waterway1_timer" to="." method="_on_waterway_1_timer_timeout"]
+[connection signal="timeout" from="waterway2_timer" to="." method="_on_waterway_2_timer_timeout"]
+[connection signal="timeout" from="waterway3_timer" to="." method="_on_waterway_3_timer_timeout"]
+[connection signal="timeout" from="waterway4_timer" to="." method="_on_waterway_4_timer_timeout"]
+[connection signal="timeout" from="waterway5_timer" to="." method="_on_waterway_5_timer_timeout"]

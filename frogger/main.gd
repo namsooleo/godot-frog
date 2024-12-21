@@ -23,8 +23,6 @@ var floating : int
 var over_water : bool
 var scored_position : Vector2
 
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	SCREEN_SIZE = get_viewport().size

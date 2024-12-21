@@ -11,7 +11,7 @@ func _ready():
 	self.position = Vector2i(500,200)	# for testing scene
 
 func _physics_process(delta):
-	if main.game_started:
+	if main.game_playing:
 		if Input.is_action_just_pressed("move_up"):
 			$AnimatedSprite2D.play("jump")
 			$AnimatedSprite2D.rotation = deg_to_rad(0)

@@ -6,9 +6,10 @@ signal start_game
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if main.game_started:
+	if main.game_playing:
 		$Score.text = "Score: %s" % main.points
-		$Remaining.text = "Goals Left: %s" % main.goal_counter
+		$Goals.text = "Goals: %s" % main.goal_counter
+		$Highscore.text = "Best: %s" % main.high_score
 	
 
 

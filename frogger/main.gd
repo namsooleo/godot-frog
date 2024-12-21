@@ -7,6 +7,7 @@ extends Node
 @export var long_log_scene : PackedScene
 @export var turtle_scene : PackedScene
 
+const SAVE_PATH = "res://highscore" 
 const CELL_SIZE : int = 60
 const OBSTACLE_DELAY : int = 50
 var MAP_HEIGHT_GRID # 14 x 13 grid
@@ -15,8 +16,10 @@ var SCREEN_SIZE
 var vehicle_lanes : Array = [[], [], [], [], []]
 var waterways : Array = [[], [], [], [], []]
 var game_over : bool
-var game_started : bool # why did I do this?
+var game_playing : bool # why did I do this?
+var life_counter : int
 var points : int
+var high_score : int
 var goal_counter : int
 var scored : bool
 var floating : int
@@ -36,10 +39,12 @@ func _ready():
 	# setting vars
 	points = 0 
 	goal_counter = 5
+	life_counter = 3
 	scored = false
 	over_water = false
 	floating = 0
-	
+	# load and set high score
+	load_high_score()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -70,15 +75,15 @@ func _physics_process(delta):
 			for platform in waterways[current]:
 				match current:
 					0:
-						platform.position.x += 1.2
+						platform.position.x += 1.7
 					1:
-						platform.position.x += 1.8
+						platform.position.x += 2.2
 					2: 
-						platform.position.x -= 1.5
+						platform.position.x -= 2.5
 					3:
 						platform.position.x += 3
 					4:
-						platform.position.x -= 2
+						platform.position.x -= 1.9
 					_:
 						print('you broke the game')
 			
@@ -96,14 +101,14 @@ func _physics_process(delta):
 		
 		if scored:
 			points += 100
-			name = "PlayerGoal%s" % goal_counter
-			$Background.add_player_sprite($Player.position, name)
+			var node_name = "PlayerGoal%s" % goal_counter
+			$Background.add_player_sprite($Player.position, node_name)
 			$Player.hide()
 			$Player.position = Vector2i(((MAP_WIDTH_GRID/2)*CELL_SIZE),(MAP_HEIGHT_GRID*CELL_SIZE)-30)	
 			$Player.show()
 			scored = false
 			
-		if $Background.get_node("PlayerGoal%s" % goal_counter):
+		if $Background.get_node_or_null("PlayerGoal%s" % goal_counter):
 			$Background.get_node("PlayerGoal%s" % goal_counter).position = \
 				$Background.get_node("PlayerGoal%s" % goal_counter).position.lerp(scored_position, delta*2)			
 	
@@ -192,12 +197,19 @@ func frog_hit():
 		
 func end_game():
 	game_over = true
-	game_started = false
+	game_playing = false
 	
 	$Player.play_death()
 	stop_timers()
-	$ui/Button.text = "Restart?"
+	if life_counter > 1:
+		$ui/Button.text = "Restart?"
+	elif life_counter == 1:
+		$ui/Button.text = "Game Over"
+	$ui/Lives.get_node("Life%s" % life_counter).hide()
+	life_counter -= 1
 	$ui/Button.show()
+	if points > high_score:
+		save_score()
 
 func _on_background_goal_hit(goal_position, goal_sprite):
 	scored = true
@@ -207,19 +219,26 @@ func _on_background_goal_hit(goal_position, goal_sprite):
 
 func _on_ui_start_game():
 	$ui/Button.hide()
-	game_started = true
+	if life_counter == 0:
+		points = 0 
+		goal_counter = 5
+		for x in range(1,4):
+			$ui/Lives.get_node("Life%s" % x).show()
+		life_counter = 3
+	game_playing = true
 	game_over = false
-	points = 0 
-	goal_counter = 5
 	scored = false
 	over_water = false
 	floating = 0
-	$Player.position = Vector2i(((MAP_WIDTH_GRID/2)*CELL_SIZE),(MAP_HEIGHT_GRID*CELL_SIZE)-30)	
+	$Player.position = Vector2i(((MAP_WIDTH_GRID/2)*CELL_SIZE),(MAP_HEIGHT_GRID*CELL_SIZE)-30)
 	$Player/AnimatedSprite2D.animation = "jump"
 	$Player/AnimatedSprite2D.set_frame(0)
 	start_timers()
+	if points > high_score:
+		$ui/Highscore.text = "Best: %s" % points
 
-	
+
+
 # Object spawner timers
 func _on_lane_1_timer_timeout():
 	car_spawn(0, 1)
@@ -287,3 +306,19 @@ func pre_spawn():
 	long_log_spawn()
 	med_log_spawn()
 
+# copied from old code
+func save_score():
+	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	var data: Dictionary = {
+		"High Score": points
+	}
+	var jstr = JSON.stringify(data)
+	file.store_line(jstr)
+
+func load_high_score():
+	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
+	if FileAccess.file_exists(SAVE_PATH):
+		if not file.eof_reached():
+			var current_line = JSON.parse_string(file.get_line())
+			if current_line:
+				high_score = current_line["High Score"]

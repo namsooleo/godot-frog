@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://74cwxqinkvmy"]
+[gd_scene load_steps=4 format=3 uid="uid://74cwxqinkvmy"]
 
 [ext_resource type="Script" path="res://ui.gd" id="1_nsj2q"]
+[ext_resource type="PackedScene" uid="uid://b2wt8wkbohjnm" path="res://background.tscn" id="2_hk5l5"]
+[ext_resource type="Texture2D" uid="uid://c6c78mmc5sjtm" path="res://assets/life.png" id="3_174eg"]
 
 [node name="ui" type="Control"]
 layout_mode = 3
@@ -10,12 +12,14 @@ offset_bottom = 40.0
 size_flags_horizontal = 4
 script = ExtResource("1_nsj2q")
 
+[node name="Background" parent="." instance=ExtResource("2_hk5l5")]
+
 [node name="Score" type="Label" parent="."]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 723.0
-offset_right = 176.0
-offset_bottom = 773.0
+offset_left = 198.0
+offset_top = 727.0
+offset_right = 347.0
+offset_bottom = 777.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 36
@@ -23,25 +27,58 @@ text = "Score: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Remaining" type="Label" parent="."]
+[node name="Goals" type="Label" parent="."]
 layout_mode = 0
-offset_left = 608.0
-offset_top = 722.0
-offset_right = 832.0
-offset_bottom = 772.0
+offset_left = 700.0
+offset_top = 726.0
+offset_right = 838.0
+offset_bottom = 776.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 36
-text = "Goals Left: 4"
+text = "Goals: 5"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Highscore" type="Label" parent="."]
+layout_mode = 0
+offset_left = 525.0
+offset_top = 726.0
+offset_right = 642.0
+offset_bottom = 776.0
+theme_override_font_sizes/font_size = 36
+text = "Best: 0"
+
+[node name="Lives" type="Label" parent="."]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 722.0
+offset_right = 100.0
+offset_bottom = 778.0
+theme_override_font_sizes/font_size = 36
+text = "Lives:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Life1" type="Sprite2D" parent="Lives"]
+position = Vector2(112, 31)
+texture = ExtResource("3_174eg")
+
+[node name="Life2" type="Sprite2D" parent="Lives"]
+position = Vector2(142, 31)
+texture = ExtResource("3_174eg")
+
+[node name="Life3" type="Sprite2D" parent="Lives"]
+position = Vector2(172, 32)
+texture = ExtResource("3_174eg")
+
 [node name="Button" type="Button" parent="."]
 layout_mode = 1
-offset_left = 350.0
-offset_top = 369.0
-offset_right = 495.0
-offset_bottom = 411.0
+offset_left = 351.0
+offset_top = 362.0
+offset_right = 496.0
+offset_bottom = 415.0
+theme_override_font_sizes/font_size = 32
 text = "Play"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

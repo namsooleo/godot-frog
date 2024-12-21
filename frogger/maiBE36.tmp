@@ -48,7 +48,7 @@ wait_time = 3.8
 autostart = true
 
 [node name="waterway1_timer" type="Timer" parent="."]
-wait_time = 3.5
+wait_time = 4.0
 autostart = true
 
 [node name="waterway2_timer" type="Timer" parent="."]
@@ -56,7 +56,7 @@ wait_time = 3.0
 autostart = true
 
 [node name="waterway3_timer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 4.5
 autostart = true
 
 [node name="waterway4_timer" type="Timer" parent="."]

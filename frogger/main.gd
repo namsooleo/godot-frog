@@ -89,15 +89,15 @@ func _physics_process(delta):
 			
 		if floating:
 			if $Player.position.y / 60 == 5.5:
-				$Player.position.x += 1.2
+				$Player.position.x += 1.7
 			elif $Player.position.y / 60 == 4.5:
-				$Player.position.x += 1.8
+				$Player.position.x += 2.2
 			elif $Player.position.y / 60 == 3.5:
-				$Player.position.x -= 1.5
+				$Player.position.x -= 2.5
 			elif $Player.position.y / 60 == 2.5:
 				$Player.position.x += 3
 			elif $Player.position.y / 60 == 1.5:
-				$Player.position.x -= 2
+				$Player.position.x -= 1.9
 		
 		if scored:
 			points += 100

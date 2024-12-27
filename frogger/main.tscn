@@ -64,7 +64,7 @@ wait_time = 2.0
 autostart = true
 
 [node name="waterway5_timer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 4.3
 autostart = true
 
 [connection signal="start_game" from="ui" to="." method="_on_ui_start_game"]
